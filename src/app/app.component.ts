@@ -15,6 +15,7 @@ export class AppComponent {
 	selected: Post;
 	constructor(private postService: PostServiceService) {
 		this.posts$ = postService.getPosts();
+		this.selected = new Post();
 	}
 
 	EditPost(post: Post): void {
