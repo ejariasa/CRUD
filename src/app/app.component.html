@@ -1,19 +1,29 @@
 <div>
-    <ul>
-        <li *ngFor="let post of posts$ | async  as list"
+    <table>
+        <td>Id</td>
+        <td>Title</td>
+        <td>Body</td>
+        <tr *ngFor="let post of Posts"
             (click)="EditPost(post)">
-            <span>{{post.id}}</span> {{post.title}}<span>{{post.body}}</span>
-        </li>
-    </ul>
+            <td>{{post.id}}</td>
+            <td>{{post.title}}</td>
+            <td>{{post.body}}</td>
+        </tr>
+
+    </table>
+
 
 </div>
 
 
 <h2>Post</h2>
+
 <input [(ngModel)]="selected.id"
        disabled=true>
-<label>Title: </label> <input [value]="selected?.title">
-<label>Body: </label><input [value]="selected?.body">
-<button (click)="UpdatePost()">Update</button>
-<button>Crear</button>
-<button>Borrar</button>
+<label>Title: </label> <input [(ngModel)]="selected.title">
+<label>Body: </label><input [(ngModel)]="selected.body">
+<button (click)="Clean()">Clean</button>
+<button (click)="Create()"
+        [disabled]="!cancreate">Crear</button>
+
+<button (click)="Delete(selected.id)">Borrar</button>

@@ -11,23 +11,34 @@ import { Component } from '@angular/core';
 export class AppComponent {
 	title = 'app';
 	posts$;
+	Posts: Post[];
+	cancreate = true;
 
-	selected: Post;
+	selected: Post = new Post();
 	constructor(private postService: PostServiceService) {
-		this.posts$ = postService.getPosts();
-		this.selected = new Post();
+		postService.getPosts().subscribe((Response) => (this.Posts = Response));
 	}
 
 	EditPost(post: Post): void {
-		console.log(post);
 		this.selected = post;
+		this.cancreate = false;
+	}
+	Clean(): void {
+		this.selected = new Post();
+		this.cancreate = true;
 	}
 
-	UpdatePost(): void {
-		console.log(this.selected);
+	Create(): void {
+		const id = this.Posts.length + 1;
+		this.selected.id = id;
+		this.Posts.push(this.selected);
+		this.selected = new Post();
 	}
 
-	Create(post: Post): void {
-		this.selected = post;
+	Delete(id: number): void {
+		this.Posts = this.Posts.filter((post: Post) => post.id !== id);
+		console.log(this.Posts);
+		this.selected = new Post();
+		this.cancreate = true;
 	}
 }
